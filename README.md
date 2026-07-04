@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>🍉 水果消消乐 </title>
     <style>
-        * {
+         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -27,51 +27,54 @@
         #game-wrapper {
             background: linear-gradient(145deg, #2d1b3d, #1a1a2e);
             border-radius: 48px;
-            padding: 24px 28px 32px 28px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(255, 200, 100, 0.06);
+            padding: 20px 24px 28px 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.06);
             position: relative;
+            min-width: 320px;
+            max-width: 620px;
+            width: 100%;
         }
 
         #game-container {
             position: relative;
             background: rgba(30, 20, 40, 0.7);
-            border-radius: 32px;
-            padding: 16px 20px 20px 20px;
+            border-radius: 28px;
+            padding: 14px 16px 16px 16px;
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255, 215, 150, 0.15);
         }
 
+        /* ========== 顶部 UI ========== */
         #header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 8px 14px 8px;
+            padding: 0 2px 12px 2px;
             color: #ffeedd;
             font-weight: 600;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-            flex-wrap: wrap;
-            flex-shrink: 0;
-            gap: 8px 12px;
+            gap: 6px 10px;
+            flex-wrap: nowrap;
+            min-height: 40px;
         }
 
         .game-title {
-            font-size: 16px;
-            letter-spacing: 1px;
+            font-size: 18px;
+            letter-spacing: 0.5px;
             background: linear-gradient(135deg, #f9d976, #f39f86);
-            white-space: nowrap;
-            flex-shrink: 0;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 800;
             display: flex;
             align-items: center;
-            gap: 6px;
-            
+            gap: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         .game-title span {
-            font-size: 20px;
+            font-size: 22px;
             -webkit-text-fill-color: initial;
         }
 
@@ -80,11 +83,11 @@
             align-items: center;
             gap: 4px;
             background: rgba(0, 0, 0, 0.3);
-            padding: 6px 18px 6px 14px;
+            padding: 3px 10px 3px 8px;
             border-radius: 30px;
-            border: 1px solid rgba(255, 200, 100, 0.2);
-            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 200, 100, 0.15);
             flex-shrink: 0;
+            white-space: nowrap;
         }
         .goal-icon {
             font-size: 18px;
@@ -93,13 +96,12 @@
         .goal-label {
             font-size: 11px;
             color: #ddccbb;
-            letter-spacing: 0.5px;
         }
         .goal-count {
             font-size: 20px;
             font-weight: 800;
             color: #ffb347;
-            min-width: 24px;
+            min-width: 22px;
             text-align: center;
             transition: all 0.2s;
         }
@@ -108,16 +110,9 @@
             animation: popGoal 0.4s ease;
         }
         @keyframes popGoal {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.6);
-                color: #ffd93d;
-            }
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); color: #ffd93d; }
+            100% { transform: scale(1); }
         }
 
         .collected-area {
@@ -138,55 +133,62 @@
             font-size: 16px;
         }
 
+        /* ========== Canvas ========== */
         #gameCanvas {
             display: block;
             margin: 0 auto;
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6), 0 8px 32px rgba(0, 0, 0, 0.5);
             background: transparent;
             width: 100%;
             height: auto;
-            max-width: 570px; 
             aspect-ratio: 570 / 510;
             touch-action: none;
             cursor: pointer;
+            max-width: 100%;
         }
 
+        /* ========== 底部 ========== */
         #footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 14px;
+            padding-top: 12px;
             color: #887a6a;
-            font-size: 13px;
+            font-size: 12px;
             letter-spacing: 0.3px;
             flex-wrap: nowrap;
-            gap: 6px 12px;
+            gap: 6px 10px;
         }
         #footer .hint {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             background: rgba(255, 255, 255, 0.04);
-            padding: 4px 16px 4px 12px;
+            padding: 3px 12px 3px 10px;
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            white-space: nowrap;
+            flex-shrink: 0;
+            font-size: 11px;
         }
         #footer .hint i {
             font-style: normal;
-            font-size: 16px;
+            font-size: 14px;
         }
         #resetBtn {
             background: rgba(255, 200, 100, 0.12);
             border: 1px solid rgba(255, 200, 100, 0.2);
             color: #f0d5b0;
-            padding: 6px 20px;
+            padding: 4px 16px;
             border-radius: 30px;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.25s;
             font-weight: 500;
             backdrop-filter: blur(4px);
+            flex-shrink: 0;
+            white-space: nowrap;
         }
         #resetBtn:hover {
             background: rgba(255, 200, 100, 0.25);
@@ -198,80 +200,56 @@
             transform: scale(0.94);
         }
 
+        /* ========== 弹窗遮罩 ========== */
         .overlay {
             position: absolute;
             inset: 0;
-            border-radius: 32px;
+            border-radius: 28px;
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 50;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.4s ease;
         }
         .overlay.show {
             display: flex;
         }
         @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         #home-overlay {
             background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
         }
         .home-card {
             background: linear-gradient(145deg, #2d1b3d, #1a1a2e);
-            padding: 40px 48px 44px;
-            border-radius: 48px;
+            padding: 32px 36px 38px;
+            border-radius: 40px;
             text-align: center;
             border: 1px solid rgba(255, 215, 150, 0.2);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
-            max-width: 400px;
+            max-width: 360px;
             width: 90%;
         }
-        .home-card .big-icon {
-            font-size: 80px;
-            display: block;
-            margin-bottom: 4px;
-        }
-        .home-card h1 {
-            color: #ffd93d;
-            font-size: 36px;
-            margin-bottom: 4px;
-            letter-spacing: 2px;
-        }
-        .home-card p {
-            color: #ddccbb;
-            font-size: 16px;
-            margin-bottom: 28px;
-            line-height: 1.6;
-        }
+        .home-card .big-icon { font-size: 64px; display: block; margin-bottom: 2px; }
+        .home-card h1 { color: #ffd93d; font-size: 30px; margin-bottom: 4px; letter-spacing: 2px; }
+        .home-card p { color: #ddccbb; font-size: 15px; margin-bottom: 22px; line-height: 1.6; }
         .home-card .btn-start {
             background: linear-gradient(135deg, #f9d976, #f39f86);
             border: none;
             color: #1a1a2e;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
-            padding: 16px 50px;
+            padding: 14px 44px;
             border-radius: 60px;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 6px 24px rgba(243, 159, 134, 0.3);
         }
-        .home-card .btn-start:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 10px 40px rgba(243, 159, 134, 0.45);
-        }
-        .home-card .btn-start:active {
-            transform: scale(0.95);
-        }
+        .home-card .btn-start:hover { transform: translateY(-3px) scale(1.03); }
+        .home-card .btn-start:active { transform: scale(0.95); }
 
         #win-overlay {
             background: rgba(0, 0, 0, 0.55);
@@ -279,195 +257,88 @@
         }
         .win-card {
             background: linear-gradient(145deg, #2d1b3d, #201530);
-            padding: 40px 48px 44px;
-            border-radius: 48px;
+            padding: 32px 36px 38px;
+            border-radius: 40px;
             text-align: center;
             border: 1px solid rgba(255, 215, 150, 0.2);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
-            max-width: 380px;
+            max-width: 340px;
             width: 90%;
         }
-        .win-card .big-icon {
-            font-size: 72px;
-            display: block;
-            margin-bottom: 8px;
-            animation: bounceWin 1s ease infinite;
-        }
-        @keyframes bounceWin {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-14px);
-            }
-        }
-        .win-card h2 {
-            color: #ffd93d;
-            font-size: 32px;
-            margin-bottom: 6px;
-            letter-spacing: 2px;
-        }
-        .win-card p {
-            color: #ddccbb;
-            font-size: 16px;
-            margin-bottom: 24px;
-            line-height: 1.6;
-        }
-        .win-card .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-        }
+        .win-card .big-icon { font-size: 60px; display: block; margin-bottom: 6px; animation: bounceWin 1s ease infinite; }
+        @keyframes bounceWin { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        .win-card h2 { color: #ffd93d; font-size: 28px; margin-bottom: 4px; }
+        .win-card p { color: #ddccbb; font-size: 15px; margin-bottom: 20px; line-height: 1.6; }
+        .win-card .btn-group { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
         .win-card .btn-play,
         .win-card .btn-home {
             border: none;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            padding: 12px 32px;
+            padding: 10px 28px;
             border-radius: 60px;
             cursor: pointer;
             transition: all 0.3s;
             flex: 1 1 auto;
-            min-width: 120px;
+            min-width: 100px;
         }
         .win-card .btn-play {
             background: linear-gradient(135deg, #f9d976, #f39f86);
             color: #1a1a2e;
             box-shadow: 0 6px 24px rgba(243, 159, 134, 0.3);
         }
-        .win-card .btn-play:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 10px 40px rgba(243, 159, 134, 0.45);
-        }
+        .win-card .btn-play:hover { transform: translateY(-3px) scale(1.03); }
         .win-card .btn-home {
             background: rgba(255, 255, 255, 0.08);
             color: #ddccbb;
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
-        .win-card .btn-home:hover {
-            background: rgba(255, 255, 255, 0.18);
-            transform: translateY(-3px);
-        }
+        .win-card .btn-home:hover { background: rgba(255, 255, 255, 0.18); transform: translateY(-3px); }
         .win-card .btn-play:active,
-        .win-card .btn-home:active {
-            transform: scale(0.95);
-        }
+        .win-card .btn-home:active { transform: scale(0.95); }
 
-        @media (max-width: 640px) {
+        /* ========== 极窄屏适配（手机小屏） ========== */
+        @media (max-width: 500px) {
             #game-wrapper {
                 padding: 12px 10px 16px 10px;
                 border-radius: 28px;
+                min-width: unset;
             }
-            #game-container {
-                padding: 10px 12px 14px 12px;
-                border-radius: 20px;
-            }
-            #header {
-                padding-bottom: 10px;
-                font-size: 14px;
-            }
-            .game-title {
-                font-size: 17px;
-            }
-            .game-title span {
-                font-size: 22px;
-            }
-            .goal-area {
-                padding: 4px 12px 4px 10px;
-            }
-            .goal-icon {
-                font-size: 20px;
-            }
-            .goal-label {
-                font-size: 11px;
-            }
-            .goal-count {
-                font-size: 20px;
-                min-width: 24px;
-            }
-            .collected-area {
-                font-size: 12px;
-                padding: 2px 10px 2px 8px;
-            }
-            .collected-area span {
-                font-size: 16px;
-            }
-            #footer {
-                font-size: 11px;
-                padding-top: 10px;
-            }
-            #resetBtn {
-                font-size: 12px;
-                padding: 4px 14px;
-            }
-            .home-card,
-            .win-card {
-                padding: 28px 20px 32px;
-            }
-            .home-card .big-icon {
-                font-size: 60px;
-            }
-            .home-card h1 {
-                font-size: 28px;
-            }
-            .win-card .big-icon {
-                font-size: 52px;
-            }
-            .win-card h2 {
-                font-size: 26px;
-            }
+            #game-container { padding: 10px 10px 12px 10px; border-radius: 20px; }
+            .game-title { font-size: 15px; }
+            .game-title span { font-size: 18px; }
+            .goal-area { padding: 2px 8px 2px 6px; gap: 3px; }
+            .goal-icon { font-size: 15px; }
+            .goal-label { font-size: 10px; }
+            .goal-count { font-size: 17px; min-width: 18px; }
+            .collected-area { font-size: 10px; padding: 2px 6px 2px 4px; }
+            .collected-area span { font-size: 14px; }
+            #footer .hint { font-size: 10px; padding: 2px 8px 2px 6px; }
+            #resetBtn { font-size: 11px; padding: 3px 12px; }
+            .home-card { padding: 24px 20px 28px; }
+            .home-card .big-icon { font-size: 48px; }
+            .home-card h1 { font-size: 24px; }
+            .home-card .btn-start { font-size: 17px; padding: 12px 32px; }
+            .win-card { padding: 24px 20px 28px; }
+            .win-card .big-icon { font-size: 44px; }
+            .win-card h2 { font-size: 22px; }
             .win-card .btn-play,
-            .win-card .btn-home {
-                font-size: 16px;
-                padding: 10px 24px;
-                min-width: 100px;
-            }
-            .home-card .btn-start {
-                font-size: 18px;
-                padding: 14px 36px;
-            }
+            .win-card .btn-home { font-size: 14px; padding: 8px 20px; min-width: 80px; }
         }
 
-        @media (max-width: 420px) {
-            #game-wrapper {
-                padding: 6px 4px 10px 4px;
-                border-radius: 20px;
-            }
-            #game-container {
-                padding: 6px 6px 10px 6px;
-                border-radius: 16px;
-            }
-            .game-title {
-                font-size: 14px;
-            }
-            .game-title span {
-                font-size: 18px;
-            }
-            .goal-area {
-                padding: 2px 8px 2px 6px;
-                gap: 4px;
-            }
-            .goal-icon {
-                font-size: 16px;
-            }
-            .goal-count {
-                font-size: 16px;
-                min-width: 18px;
-            }
-            #footer .hint {
-                padding: 2px 10px 2px 8px;
-                font-size: 10px;
-            }
-            .win-card .btn-group {
-                flex-direction: column;
-                gap: 8px;
-            }
-            .win-card .btn-play,
-            .win-card .btn-home {
-                width: 100%;
-            }
+        @media (max-width: 400px) {
+            #game-wrapper { padding: 6px 4px 10px 4px; border-radius: 20px; }
+            #game-container { padding: 6px 6px 8px 6px; border-radius: 14px; }
+            .game-title { font-size: 13px; }
+            .game-title span { font-size: 15px; }
+            .goal-area { padding: 2px 6px 2px 4px; gap: 2px; }
+            .goal-icon { font-size: 13px; }
+            .goal-label { font-size: 9px; }
+            .goal-count { font-size: 14px; min-width: 16px; }
+            .collected-area { font-size: 9px; padding: 1px 4px 1px 3px; }
+            .collected-area span { font-size: 12px; }
+            #footer .hint { font-size: 9px; padding: 2px 6px 2px 4px; }
+            #resetBtn { font-size: 10px; padding: 2px 10px; }
         }
     </style>
 </head>

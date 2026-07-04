@@ -51,13 +51,16 @@
             font-weight: 600;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
             flex-wrap: wrap;
+            flex-shrink: 0;
             gap: 8px 12px;
         }
 
         .game-title {
-            font-size: 22px;
+            font-size: 16px;
             letter-spacing: 1px;
             background: linear-gradient(135deg, #f9d976, #f39f86);
+            white-space: nowrap;
+            flex-shrink: 0;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -65,36 +68,38 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            
         }
         .game-title span {
-            font-size: 28px;
+            font-size: 20px;
             -webkit-text-fill-color: initial;
         }
 
         .goal-area {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 4px;
             background: rgba(0, 0, 0, 0.3);
             padding: 6px 18px 6px 14px;
-            border-radius: 40px;
+            border-radius: 30px;
             border: 1px solid rgba(255, 200, 100, 0.2);
             backdrop-filter: blur(4px);
+            flex-shrink: 0;
         }
         .goal-icon {
-            font-size: 28px;
+            font-size: 18px;
             line-height: 1;
         }
         .goal-label {
-            font-size: 14px;
+            font-size: 11px;
             color: #ddccbb;
             letter-spacing: 0.5px;
         }
         .goal-count {
-            font-size: 26px;
+            font-size: 20px;
             font-weight: 800;
             color: #ffb347;
-            min-width: 32px;
+            min-width: 24px;
             text-align: center;
             transition: all 0.2s;
         }
@@ -118,17 +123,19 @@
         .collected-area {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 14px;
+            gap: 4px;
+            font-size: 12px;
             color: #ccbbaa;
             background: rgba(0, 0, 0, 0.2);
-            padding: 4px 14px 4px 10px;
+            padding: 2px 8px 2px 6px;
             border-radius: 30px;
+            flex-shrink: 0;
+            white-space: nowrap;
         }
         .collected-area span {
             color: #ffb347;
             font-weight: 700;
-            font-size: 20px;
+            font-size: 16px;
         }
 
         #gameCanvas {
@@ -139,6 +146,7 @@
             background: transparent;
             width: 100%;
             height: auto;
+            max-width: 570px; 
             aspect-ratio: 570 / 510;
             touch-action: none;
             cursor: pointer;
@@ -152,7 +160,7 @@
             color: #887a6a;
             font-size: 13px;
             letter-spacing: 0.3px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             gap: 6px 12px;
         }
         #footer .hint {
